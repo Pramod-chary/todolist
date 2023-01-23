@@ -65,7 +65,11 @@ app.get("/", function (req, res) {
   ItemCollection.find(function (err, itemsArray) {
     if (err) console.log(err);
     else {
-      res.render("list", { listTitle: day, newListItems: itemsArray });
+      res.render("list", {
+        listTitle: day,
+        newListItems: itemsArray,
+        currentList: "Default",
+      });
     }
   });
 });
@@ -86,6 +90,7 @@ app.get("/:customListName", function (req, res) {
           res.render("list", {
             listTitle: customListName,
             newListItems: foundList.items,
+            currentList: customListName,
           });
         }
       }
