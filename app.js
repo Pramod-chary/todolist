@@ -2,10 +2,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js");
 const _ = require("lodash");
+const dotenv = require("dotenv");
 const todayDate = date.getDate();
 const app = express();
 
 app.set("view engine", "ejs");
+dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -14,8 +16,11 @@ const mongoose = require("mongoose");
 //used to avoid depreceating warning
 mongoose.set("strictQuery", false);
 //connecting mongoose to localhost
-const DB =
-  "mongodb+srv://Pramod_chary:hVNZzhkw1O3SVwqp@cluster0.cu5fufr.mongodb.net/todoListDB?retryWrites=true&w=majority";
+
+const DB = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.cu5fufr.mongodb.net/todoListDB?retryWrites=true&w=majority`;
+console.log(DB);
+//const DB = "mongodb://127.0.0.1:27017/todoListDb";
+
 mongoose
   .connect(DB)
   .then(() => {
